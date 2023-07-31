@@ -1,0 +1,59 @@
+services:
+  _defaults:
+    public: true
+
+  oksydan.is_product_extra_tab.module:
+    class: Is_productextratabs
+    factory: [ 'Module', 'getInstanceByName' ]
+    public: false
+    arguments:
+      - 'is_productextratabs'
+
+  oksydan.is_product_extra_tab.repository.hook_module_repository:
+    class: Oksydan\IsProductExtraTabs\Repository\HookModuleRepository
+    public: true
+    arguments:
+      - '@doctrine.dbal.default_connection'
+      - '%database_prefix%'
+
+  oksydan.is_product_extra_tab.cache.template_cache:
+    class: Oksydan\IsProductExtraTabs\Cache\TemplateCache
+    public: true
+    arguments:
+      - '@oksydan.is_product_extra_tab.module'
+      - "@=service('prestashop.adapter.legacy.context').getContext()"
+      - '@oksydan.is_product_extra_tab.repository.hook_module_repository'
+      - '@prestashop.adapter.legacy.configuration'
+      - '@oksydan.is_product_extra_tab.repository.product_extra_tab'
+
+  oksydan.is_product_extra_tab.hook.abstract_hook:
+    class: Oksydan\IsProductExtraTabs\Hook\AbstractHook
+    public: true
+    arguments:
+      - '@oksydan.is_product_extra_tab.module'
+      - "@=service('prestashop.adapter.legacy.context').getContext()"
+
+  oksydan.is_product_extra_tab.hook.abstract_display_hook:
+    class: Oksydan\IsProductExtraTabs\Hook\AbstractDisplayHook
+    parent: 'oksydan.is_product_extra_tab.hook.abstract_hook'
+    public: true
+
+  oksydan.is_product_extra_tab.hook.abstract_cacheable_display_hook:
+    class: Oksydan\IsProductExtraTabs\Hook\AbstractCacheableDisplayHook
+    parent: 'oksydan.is_product_extra_tab.hook.abstract_display_hook'
+    public: true
+    arguments:
+      - '@oksydan.is_product_extra_tab.repository.product_extra_tab'
+      - '@oksydan.is_product_extra_tab.cache.template_cache'
+
+  oksydan.is_product_extra_tab.hook.display_product_extra_content:
+    class: Oksydan\IsProductExtraTabs\Hook\DisplayProductExtraContent
+    parent: 'oksydan.is_product_extra_tab.hook.abstract_cacheable_display_hook'
+    public: true
+
+  oksydan.is_product_extra_tab.repository.product_extra_tab:
+    class: Oksydan\IsProductExtraTabs\Repository\ProductExtraTabRepository
+    public: true
+    factory: ['@doctrine.orm.default_entity_manager', getRepository]
+    arguments:
+      - Oksydan\IsProductExtraTabs\Entity\ProductExtraTab

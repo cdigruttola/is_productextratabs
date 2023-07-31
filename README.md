@@ -1,1 +1,2 @@
-# is_productextratabs
+# Product Extra Tabs
+Prestashop module created for [starter theme](https://github.com/Oksydan/modern-prestashop-starter-theme)

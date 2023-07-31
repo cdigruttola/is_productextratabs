@@ -1,0 +1,53 @@
+database:
+  product_extra_tab:
+    columns:
+      id_product_extra_tab: INT AUTO_INCREMENT NOT NULL
+      active: TINYINT(1) NOT NULL
+      name: VARCHAR(255) NOT NULL
+      position: INT NOT NULL
+    primary:
+      - id_product_extra_tab
+    engine: InnoDb
+
+  product_extra_tab_product:
+    columns:
+      id_product_extra_tab: INT NOT NULL
+      id_product: INT NOT NULL
+      active: TINYINT(1) NOT NULL
+    primary:
+      - id_product_extra_tab
+      - id_product
+    engine: InnoDb
+
+  product_extra_tab_product_lang:
+    columns:
+      id_product_extra_tab: INT NOT NULL
+      id_product: INT NOT NULL
+      id_lang: INT NOT NULL
+      title: VARCHAR(255) NOT NULL
+      content: TEXT NOT NULL
+    primary:
+      - id_product_extra_tab
+      - id_product
+      - id_lang
+    engine: InnoDb
+
+  product_extra_tab_default_lang:
+    columns:
+      id_product_extra_tab: INT NOT NULL
+      id_lang: INT NOT NULL
+      title: VARCHAR(255) NOT NULL
+      content: TEXT NOT NULL
+    primary:
+      - id_product_extra_tab
+      - id_lang
+    engine: InnoDb
+
+  product_extra_tab_shop:
+    columns:
+      id_product_extra_tab: INT NOT NULL
+      id_shop: INT NOT NULL
+    primary:
+      - id_product_extra_tab
+      - id_shop
+    engine: InnoDb

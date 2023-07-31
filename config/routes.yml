@@ -1,0 +1,42 @@
+productextratab_controller:
+    path: /is_productextratabs/configuration
+    methods: [GET]
+    defaults:
+        _controller: 'Oksydan\IsProductExtraTabs\Controller\ProductExtraTabController::index'
+
+productextratab_controller_create:
+    path: /is_productextratab/create
+    methods: [GET, POST]
+    defaults:
+        _controller: 'Oksydan\IsProductExtraTabs\Controller\ProductExtraTabController::create'
+
+productextratab_controller_edit:
+    path: /is_productextratab/{extraTabId}/edit
+    methods: [GET, POST]
+    defaults:
+        _controller: 'Oksydan\IsProductExtraTabs\Controller\ProductExtraTabController::edit'
+    requirements:
+        extraTabId: \d+
+
+productextratab_controller_delete:
+    path: /is_productextratab/{extraTabId}/delete
+    methods: [GET, POST]
+    defaults:
+        _controller: 'Oksydan\IsProductExtraTabs\Controller\ProductExtraTabController::delete'
+    requirements:
+        extraTabId: \d+
+
+productextratab_controller_toggle_status:
+    path: /is_productextratab/{extraTabId}/toggle
+    methods: [POST]
+    defaults:
+        _controller: 'Oksydan\IsProductExtraTabs\Controller\ProductExtraTabController::toggleStatus'
+    requirements:
+        extraTabId: \d+
+
+productextratab_controller_update_positions:
+    path: /is_productextratab/update_positions
+    methods: [POST]
+    defaults:
+        _controller: 'Oksydan\IsProductExtraTabs\Controller\ProductExtraTabController::updatePositionAction'
+
