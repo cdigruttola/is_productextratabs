@@ -70,16 +70,16 @@ class ProductExtraTabController extends FrameworkBundleAdminController
         ]);
     }
 
-    public function edit(Request $request, int $sliderId): Response
+    public function edit(Request $request, int $extraTabId): Response
     {
         $formBuilder = $this->get('oksydan.is_product_extra_tab.form.identifiable_object.builder.product_extra_tab_form_builder');
-        $form = $formBuilder->getFormFor((int) $sliderId);
+        $form = $formBuilder->getFormFor((int) $extraTabId);
         $form->handleRequest($request);
 
         $formHandler = $this->get('oksydan.is_product_extra_tab.form.identifiable_object.handler.product_extra_tab_form_handler');
 
         try {
-            $result = $formHandler->handleFor($sliderId, $form);
+            $result = $formHandler->handleFor($extraTabId, $form);
 
             if (null !== $result->getIdentifiableObjectId()) {
                 $this->addFlash(
@@ -100,11 +100,11 @@ class ProductExtraTabController extends FrameworkBundleAdminController
         ]);
     }
 
-    public function delete(Request $request, int $sliderId): Response
+    public function delete(Request $request, int $extraTabId): Response
     {
         $extraTab = $this->getDoctrine()
             ->getRepository(ProductExtraTab::class)
-            ->find($sliderId);
+            ->find($extraTabId);
 
         if (!empty($extraTab)) {
             $multistoreContext = $this->get('prestashop.adapter.shop.context');
@@ -140,7 +140,7 @@ class ProductExtraTabController extends FrameworkBundleAdminController
 
         $this->addFlash(
             'error',
-            $this->trans('Cannot find extraTab %d', TranslationDomains::TRANSLATION_DOMAIN_ADMIN, ['%d' => $sliderId])
+            $this->trans('Cannot find extraTab %d', TranslationDomains::TRANSLATION_DOMAIN_ADMIN, ['%d' => $extraTabId])
         );
 
         return $this->redirectToRoute('productextratab_controller');
@@ -148,21 +148,21 @@ class ProductExtraTabController extends FrameworkBundleAdminController
 
     /**
      * @param Request $request
-     * @param int $sliderId
+     * @param int $extraTabId
      *
      * @return Response
      */
-    public function toggleStatus(Request $request, int $sliderId): Response
+    public function toggleStatus(Request $request, int $extraTabId): Response
     {
         $entityManager = $this->get('doctrine.orm.entity_manager');
         $entity = $entityManager
             ->getRepository(ProductExtraTab::class)
-            ->findOneBy(['id' => $sliderId]);
+            ->findOneBy(['id' => $extraTabId]);
 
         if (empty($entity)) {
             return $this->json([
                 'status' => false,
-                'message' => sprintf('Extra tab %d doesn\'t exist', $sliderId),
+                'message' => sprintf('Extra tab %d doesn\'t exist', $extraTabId),
             ]);
         }
 
@@ -179,7 +179,7 @@ class ProductExtraTabController extends FrameworkBundleAdminController
                 'status' => false,
                 'message' => sprintf(
                     'There was an error while updating the status of slide %d: %s',
-                    $sliderId,
+                    $extraTabId,
                     $e->getMessage()
                 ),
             ];

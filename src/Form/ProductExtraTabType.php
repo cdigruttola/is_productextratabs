@@ -75,6 +75,15 @@ class ProductExtraTabType extends TranslatorAwareType
                         new NotBlank(),
                 ],
             ])
+        ->add('title', TranslatableType::class, [
+            'type' => TextType::class,
+            'locales' => $this->locales,
+                'label' => $this->trans('Title', TranslationDomains::TRANSLATION_DOMAIN_ADMIN),
+                'required' => true,
+            'options' => ['constraints' => [
+                        new NotBlank(),
+                ]],
+            ])
             ->add('content', TranslatableType::class, [
                 'type' => FormattedTextareaType::class,
                 'label' => $this->trans('Default content', TranslationDomains::TRANSLATION_DOMAIN_ADMIN),
