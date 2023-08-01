@@ -34,7 +34,6 @@ use PrestaShopBundle\Form\Admin\Type\ShopChoiceTreeType;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\Admin\Type\TranslatableType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -69,7 +68,7 @@ class ProductExtraTabType extends TranslatorAwareType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => $this->trans('Name', TranslationDomains::TRANSLATION_DOMAIN_ADMIN),
+                'label' => $this->trans('Name', TranslationDomains::ADMIN_GLOBAL),
                 'required' => true,
                     'constraints' => [
                         new NotBlank(),
@@ -78,7 +77,7 @@ class ProductExtraTabType extends TranslatorAwareType
         ->add('title', TranslatableType::class, [
             'type' => TextType::class,
             'locales' => $this->locales,
-                'label' => $this->trans('Title', TranslationDomains::TRANSLATION_DOMAIN_ADMIN),
+                'label' => $this->trans('Title', TranslationDomains::ADMIN_GLOBAL),
                 'required' => true,
             'options' => ['constraints' => [
                         new NotBlank(),
@@ -101,7 +100,7 @@ class ProductExtraTabType extends TranslatorAwareType
                 ],
             ])
             ->add('active', SwitchType::class, [
-                'label' => $this->trans('Active', TranslationDomains::TRANSLATION_DOMAIN_ADMIN),
+                'label' => $this->trans('Active', 'Admin.Global'),
                 'required' => true,
             ]);
 
@@ -110,7 +109,7 @@ class ProductExtraTabType extends TranslatorAwareType
                 'shop_association',
                 ShopChoiceTreeType::class,
                 [
-                    'label' => $this->trans('Shop associations', TranslationDomains::TRANSLATION_DOMAIN_ADMIN),
+                    'label' => $this->trans('Shop association', TranslationDomains::ADMIN_GLOBAL),
                     'constraints' => [
                         new NotBlank([
                             'message' => $this->trans(
