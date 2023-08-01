@@ -11,7 +11,6 @@ use Oksydan\IsProductExtraTabs\Entity\ProductExtraTab;
 
 class ProductExtraTabProductRepository extends EntityRepository
 {
-
     /**
      * @var ProductExtraTabRepository
      */
@@ -24,15 +23,14 @@ class ProductExtraTabProductRepository extends EntityRepository
     }
 
     public function getActiveProductExtraTabProductByStoreId(
-        int  $idStore,
-        int  $idProduct,
+        int $idStore,
+        int $idProduct,
         bool $activeOnly = true,
-        int  $limit = 0
-    ): array
-    {
+        int $limit = 0
+    ): array {
         $defaults = $this->repository->getActiveProductExtraTabByStoreId($idStore);
 
-        \PrestaShopLogger::addLog(var_export($defaults,true));
+        \PrestaShopLogger::addLog(var_export($defaults, true));
 
         $qb = $this
             ->createQueryBuilder('s')
@@ -53,24 +51,22 @@ class ProductExtraTabProductRepository extends EntityRepository
             $qb->setMaxResults($limit);
         }
 
-        $result =  $qb->getQuery()->getScalarResult();
+        $result = $qb->getQuery()->getScalarResult();
 
         foreach ($defaults as $default) {
-
         }
 
         return $result;
     }
 
     public function getActiveProductExtraTabProductByLangAndStoreId(
-        int  $idLang,
-        int  $idStore,
-        int  $idProduct,
+        int $idLang,
+        int $idStore,
+        int $idProduct,
         bool $activeOnly = true,
-        int  $limit = 0
-    ): array
-    {
-         \PrestaShopLogger::addLog(var_export($this->repository->getActiveProductExtraByLangAndStoreId($idLang, $idStore),true));
+        int $limit = 0
+    ): array {
+        \PrestaShopLogger::addLog(var_export($this->repository->getActiveProductExtraByLangAndStoreId($idLang, $idStore), true));
 
         $qb = $this
             ->createQueryBuilder('s')

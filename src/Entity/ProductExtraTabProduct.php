@@ -44,7 +44,6 @@ class ProductExtraTabProduct
      *
      * @ORM\Column(name="id_product_extra_tab", type="integer")
      * @Orm\GeneratedValue(strategy="NONE")
-     *
      */
     private $id_product_extra_tab;
     /**
@@ -54,7 +53,6 @@ class ProductExtraTabProduct
      *
      * @ORM\Column(name="id_product", type="integer")
      * @Orm\GeneratedValue(strategy="NONE")
-     *
      */
     private $id_product;
 
@@ -90,6 +88,7 @@ class ProductExtraTabProduct
 
     /**
      * @param int $id_product_extra_tab
+     *
      * @return ProductExtraTabProduct
      */
     public function setIdProductExtraTab(int $id_product_extra_tab): ProductExtraTabProduct
@@ -109,11 +108,13 @@ class ProductExtraTabProduct
 
     /**
      * @param int $id_product
+     *
      * @return ProductExtraTabProduct
      */
     public function setIdProduct(int $id_product): ProductExtraTabProduct
     {
         $this->id_product = $id_product;
+
         return $this;
     }
 
@@ -147,6 +148,7 @@ class ProductExtraTabProduct
 
     /**
      * @param ProductExtraTab $extraTab
+     *
      * @return ProductExtraTabProduct
      */
     public function setProductExtraTab(ProductExtraTab $extraTab): ProductExtraTabProduct

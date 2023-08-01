@@ -44,7 +44,6 @@ class ProductExtraTabProductLang
      *
      * @ORM\Column(name="id_product_extra_tab", type="integer")
      * @Orm\GeneratedValue(strategy="NONE")
-     *
      */
     private $id_product_extra_tab;
     /**
@@ -54,7 +53,6 @@ class ProductExtraTabProductLang
      *
      * @ORM\Column(name="id_product", type="integer")
      * @Orm\GeneratedValue(strategy="NONE")
-     *
      */
     private $id_product;
 
@@ -104,6 +102,7 @@ class ProductExtraTabProductLang
 
     /**
      * @param ProductExtraTabProduct $extraTab
+     *
      * @return ProductExtraTabProductLang
      */
     public function setProductExtraTabProduct(ProductExtraTabProduct $extraTab): ProductExtraTabProductLang

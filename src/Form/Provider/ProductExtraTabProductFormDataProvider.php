@@ -9,7 +9,6 @@ use Oksydan\IsProductExtraTabs\Repository\ProductExtraTabProductRepository;
 use Oksydan\IsProductExtraTabs\Repository\ProductExtraTabRepository;
 use PrestaShop\PrestaShop\Adapter\Shop\Context;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider\FormDataProviderInterface;
-use Shop;
 
 class ProductExtraTabProductFormDataProvider implements FormDataProviderInterface
 {
@@ -34,11 +33,10 @@ class ProductExtraTabProductFormDataProvider implements FormDataProviderInterfac
      * @param Context $shopContext
      */
     public function __construct(
-        ProductExtraTabRepository        $productExtraTabRepository,
+        ProductExtraTabRepository $productExtraTabRepository,
         ProductExtraTabProductRepository $productExtraTabProductRepository,
-        Context                          $shopContext
-    )
-    {
+        Context $shopContext
+    ) {
         $this->productExtraTabRepository = $productExtraTabRepository;
         $this->productExtraTabProductRepository = $productExtraTabProductRepository;
         $this->shopContext = $shopContext;
@@ -77,6 +75,7 @@ class ProductExtraTabProductFormDataProvider implements FormDataProviderInterfac
             }
             $toReturn[$extraTab->getId()] = $data;
         }
+
         return $toReturn;
     }
 

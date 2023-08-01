@@ -6,13 +6,10 @@ namespace Oksydan\IsProductExtraTabs\Form\DataHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Oksydan\IsProductExtraTabs\Entity\ProductExtraTab;
-use Oksydan\IsProductExtraTabs\Entity\ProductExtraTabDefaultLang;
 use Oksydan\IsProductExtraTabs\Entity\ProductExtraTabProduct;
 use Oksydan\IsProductExtraTabs\Entity\ProductExtraTabProductLang;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataHandler\FormDataHandlerInterface;
 use PrestaShopBundle\Entity\Repository\LangRepository;
-use PrestaShopBundle\Entity\Shop;
 
 class ProductExtraTabProductFormDataHandler implements FormDataHandlerInterface
 {
@@ -68,12 +65,10 @@ class ProductExtraTabProductFormDataHandler implements FormDataHandlerInterface
                 ->setLang($lang)
                 ->setTitle($data['title'][$langId] ?? '')
                 ->setContent($data['content'][$langId] ?? '');
-
         }
 
         $this->entityManager->persist($extraTab);
         $this->entityManager->flush();
-
     }
 
     /**
@@ -101,5 +96,4 @@ class ProductExtraTabProductFormDataHandler implements FormDataHandlerInterface
 
         $this->entityManager->flush();
     }
-
 }

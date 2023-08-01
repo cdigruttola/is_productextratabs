@@ -42,9 +42,9 @@ class DisplayAdminProductsExtra extends AbstractDisplayHook
 
             $toReturn .= $twig->render($this->getTemplateFullPath(), [
                 'form' => $form->createView(),
-                'translationDomain' => TranslationDomains::TRANSLATION_DOMAIN_ADMIN,]);
+                'translationDomain' => TranslationDomains::TRANSLATION_DOMAIN_ADMIN, ]);
         }
+
         return $toReturn;
     }
-
 }

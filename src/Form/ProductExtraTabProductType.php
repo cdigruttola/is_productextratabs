@@ -30,7 +30,6 @@ namespace Oksydan\IsProductExtraTabs\Form;
 use Oksydan\IsProductExtraTabs\Translations\TranslationDomains;
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\CleanHtml;
 use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
-use PrestaShopBundle\Form\Admin\Type\ShopChoiceTreeType;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\Admin\Type\TranslatableType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
@@ -38,11 +37,9 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProductExtraTabProductType extends TranslatorAwareType
 {
-
     /**
      * {@inheritdoc}
      */
@@ -59,7 +56,7 @@ class ProductExtraTabProductType extends TranslatorAwareType
                 ],
                 'attr' => [
                     'readonly' => true,
-                ]
+                ],
             ])
             ->add('title', TranslatableType::class, [
                 'type' => TextType::class,
