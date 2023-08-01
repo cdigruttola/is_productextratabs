@@ -17,5 +17,4 @@ abstract class AbstractHook implements HookInterface
         $this->module = $module;
         $this->context = $context;
     }
-
 }

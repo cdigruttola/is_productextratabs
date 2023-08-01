@@ -8,7 +8,6 @@ use PrestaShop\PrestaShop\Core\Product\ProductExtraContent;
 
 class DisplayProductExtraContent extends AbstractCacheableDisplayHook
 {
-
     private const TEMPLATE_FILE = 'extra-tab.tpl';
 
     protected function getTemplate(): string

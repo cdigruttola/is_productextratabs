@@ -10,7 +10,6 @@ use Tools;
 
 abstract class AbstractDisplayHook extends AbstractHook
 {
-
     public function execute(array $params)
     {
         if (!$this->shouldBlockBeDisplayed($params)) {
@@ -43,14 +42,14 @@ abstract class AbstractDisplayHook extends AbstractHook
         if ($params['product'] instanceof Product) {
             $productId = $params['product']->id;
         } elseif (isset($params['id_product'])) {
-            $productId = (int)$params['id_product'];
+            $productId = (int) $params['id_product'];
         } else {
-            $productId = (int)Tools::getValue('id_product');
+            $productId = (int) Tools::getValue('id_product');
         }
 
         return [
             $productId,
-            (int)Context::getContext()->shop->id
+            (int) Context::getContext()->shop->id,
         ];
     }
 }
