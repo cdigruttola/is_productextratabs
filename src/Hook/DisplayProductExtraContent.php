@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Oksydan\IsProductExtraTabs\Hook;
 
+use PrestaShop\PrestaShop\Core\Product\ProductExtraContent;
+
 class DisplayProductExtraContent extends AbstractCacheableDisplayHook
 {
-    private const TEMPLATE_FILE = 'extra-content.tpl';
+
+    private const TEMPLATE_FILE = 'extra-tab.tpl';
 
     protected function getTemplate(): string
     {
@@ -16,8 +19,24 @@ class DisplayProductExtraContent extends AbstractCacheableDisplayHook
     protected function assignTemplateVariables(array $params)
     {
         $this->context->smarty->assign([
-
+            'tab_content' => $params['tpl_content'],
         ]);
+    }
+
+    public function execute(array $params)
+    {
+        $tabs = [];
+
+        foreach ($this->getExtraTab() as $extraTab) {
+            $tab = new ProductExtraContent();
+            $params['tpl_content'] = $extraTab['content'];
+            $tab->setTitle($extraTab['title'])
+                ->setContent(parent::execute($params));
+            parent::execute($params);
+            $tabs[] = $tab;
+        }
+
+        return $tabs;
     }
 
     /**
@@ -25,20 +44,10 @@ class DisplayProductExtraContent extends AbstractCacheableDisplayHook
      */
     private function getExtraTab(): array
     {
-        $now = new \DateTime();
-        $slides = $this->slideRepository->getActiveProductExtraByLangAndStoreId(
+        return $this->repository->getActiveProductExtraByLangAndStoreId(
             $this->context->language->id,
-            $this->context->shop->id,
-            true,
-            0, // 0 means no limit
-            $now
+            $this->context->shop->id
         );
-
-        foreach ($slides as &$slide) {
-            $slide = $this->slidePresenter->present($slide);
-        }
-
-        return $slides;
     }
 
     protected function getCacheKey(): string

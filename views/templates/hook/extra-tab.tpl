@@ -22,6 +22,6 @@
 * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *}
 
-{foreach from=$sliders item="slider"}
-       {include file='module:is_productslider/views/templates/hook/slider.tpl' slider=$slider}
-{/foreach}
+<div id="an_bootstraptabs">
+    {$tab_content nofilter} {* HTML, no escape necessary *}
+</div>

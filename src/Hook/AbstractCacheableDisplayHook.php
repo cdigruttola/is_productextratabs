@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Oksydan\IsProductExtraTabs\Hook;
 
+use Context;
+use Module;
 use Oksydan\IsProductExtraTabs\Cache\TemplateCache;
 use Oksydan\IsProductExtraTabs\Repository\ProductExtraTabRepository;
 
@@ -12,7 +14,7 @@ abstract class AbstractCacheableDisplayHook extends AbstractDisplayHook
     /**
      * @var ProductExtraTabRepository
      */
-    protected $slideRepository;
+    protected $repository;
 
     /**
      * @var TemplateCache
@@ -20,18 +22,18 @@ abstract class AbstractCacheableDisplayHook extends AbstractDisplayHook
     protected $templateCache;
 
     public function __construct(
-        \Module $module,
-        \Context $context,
+        Module $module,
+        Context $context,
         ProductExtraTabRepository $slideRepository,
         TemplateCache $templateCache
     ) {
         parent::__construct($module, $context);
 
-        $this->slideRepository = $slideRepository;
+        $this->repository = $slideRepository;
         $this->templateCache = $templateCache;
     }
 
-    public function execute(array $params): string
+    public function execute(array $params)
     {
         if (!$this->shouldBlockBeDisplayed($params)) {
             return '';

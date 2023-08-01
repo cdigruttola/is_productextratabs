@@ -50,7 +50,7 @@ class ProductExtraTabRepository extends EntityRepository
     ): array {
         $qb = $this
             ->createQueryBuilder('s')
-            ->select('s.*')
+            ->select('s.id, s.name, s.position, s.active')
             ->join('s.shops', 'ss')
             ->andWhere('ss.id = :storeId')
             ->orderBy('s.position')
@@ -75,7 +75,7 @@ class ProductExtraTabRepository extends EntityRepository
     ): array {
         $qb = $this
             ->createQueryBuilder('s')
-            ->select('sl.*, s.*')
+            ->select('sl.title, sl.content, s.id, s.name, s.active, s.position')
             ->join('s.productExtraTabDefaultLangs', 'sl')
             ->join('s.shops', 'ss')
             ->andWhere('sl.lang = :langId')

@@ -51,6 +51,11 @@ services:
     parent: 'oksydan.is_product_extra_tab.hook.abstract_cacheable_display_hook'
     public: true
 
+  oksydan.is_product_extra_tab.hook.display_admin_products_extra:
+    class: Oksydan\IsProductExtraTabs\Hook\DisplayAdminProductsExtra
+    parent: 'oksydan.is_product_extra_tab.hook.abstract_display_hook'
+    public: true
+
   oksydan.is_product_extra_tab.repository.product_extra_tab:
     class: Oksydan\IsProductExtraTabs\Repository\ProductExtraTabRepository
     public: true

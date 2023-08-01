@@ -75,7 +75,8 @@ class Is_productextratabs extends Module
 
         return parent::install()
             && $tableResult
-            && $this->registerHook('displayProductExtraContent');
+            && $this->registerHook('displayProductExtraContent')
+            && $this->registerHook('displayAdminProductsExtra');
     }
 
     public function uninstall($reset = false)
@@ -85,7 +86,8 @@ class Is_productextratabs extends Module
             $tableResult = $this->getInstaller()->dropTables();
         }
 
-        return $tableResult && parent::uninstall();
+        return $tableResult && $this->unregisterHook('displayProductExtraContent')
+            && $this->unregisterHook('displayAdminProductsExtra') && parent::uninstall();
     }
 
     public function reset(): bool
@@ -133,8 +135,12 @@ class Is_productextratabs extends Module
         }
     }
 
-    /** @param string $methodName */
-    public function __call($methodName, array $arguments)
+    /**
+     * @param string $methodName
+     * @param array $arguments
+     * @return void|null
+     */
+    public function __call(string $methodName, array $arguments)
     {
         if (str_starts_with($methodName, 'hook')) {
             if ($hook = $this->getHookObject($methodName)) {
@@ -152,11 +158,11 @@ class Is_productextratabs extends Module
      *
      * @return HookInterface|null
      */
-    private function getHookObject($methodName)
+    private function getHookObject(string $methodName): ?HookInterface
     {
         $serviceName = sprintf(
-            'oksydan.is_product_extra_tabs.hook.%s',
-            \Tools::toUnderscoreCase(str_replace('hook', '', $methodName))
+            'oksydan.is_product_extra_tab.hook.%s',
+            Tools::toUnderscoreCase(str_replace('hook', '', $methodName))
         );
 
         $hook = $this->getService($serviceName);
