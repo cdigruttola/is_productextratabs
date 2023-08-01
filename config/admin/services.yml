@@ -121,9 +121,37 @@ services:
     tags:
       - { name: form.type }
 
+# Admin product Hook
+  oksydan.is_product_extra_tab.form.identifiable_object.data_provider.product_extra_tab_product_form_data_provider:
+    class: 'Oksydan\IsProductExtraTabs\Form\Provider\ProductExtraTabProductFormDataProvider'
+    arguments:
+      - '@oksydan.is_product_extra_tab.repository.product_extra_tab'
+      - '@oksydan.is_product_extra_tab.repository.product_extra_tab_product'
+      - '@prestashop.adapter.shop.context'
+
+  oksydan.is_product_extra_tab.form.product_extra_tab_product_type:
+    class: 'Oksydan\IsProductExtraTabs\Form\ProductExtraTabProductType'
+    parent: 'form.type.translatable.aware'
+    public: true
+    tags:
+      - { name: form.type }
+
+  oksydan.is_product_extra_tab.form.identifiable_object.data_handler.product_extra_tab_product_form_data_handler:
+    class: 'Oksydan\IsProductExtraTabs\Form\DataHandler\ProductExtraTabProductFormDataHandler'
+    arguments:
+      - '@oksydan.is_product_extra_tab.repository.product_extra_tab'
+      - '@prestashop.core.admin.lang.repository'
+      - '@doctrine.orm.default_entity_manager'
+      - "@=service('prestashop.adapter.legacy.context').getLanguages()"
+
   oksydan.is_product_extra_tab.grid.position_definition:
     class: PrestaShop\PrestaShop\Core\Grid\Position\PositionDefinition
     arguments:
       - 'product_extra_tab'
       - 'id_product_extra_tab'
       - 'position'
+
+  oksydan.is_product_extra_tab.hook.display_admin_products_extra:
+    class: Oksydan\IsProductExtraTabs\Hook\DisplayAdminProductsExtra
+    parent: 'oksydan.is_product_extra_tab.hook.abstract_display_hook'
+    public: true

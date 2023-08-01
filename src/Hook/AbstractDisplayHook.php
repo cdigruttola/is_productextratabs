@@ -32,6 +32,9 @@ abstract class AbstractDisplayHook extends AbstractHook
 
     public function getTemplateFullPath(): string
     {
+        if($this->module->isSymfonyContext()) {
+            return "@Modules/{$this->module->name}/views/templates/admin/product/{$this->getTemplate()}";
+        }
         return "module:{$this->module->name}/views/templates/hook/{$this->getTemplate()}";
     }
 

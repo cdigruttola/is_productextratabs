@@ -34,32 +34,14 @@ use PrestaShopBundle\Form\Admin\Type\ShopChoiceTreeType;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\Admin\Type\TranslatableType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ProductExtraTabType extends TranslatorAwareType
+class ProductExtraTabProductType extends TranslatorAwareType
 {
-    /**
-     * @var bool
-     */
-    private $isMultistoreUsed;
-
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param bool $isMultistoreUsed
-     */
-    public function __construct(
-        TranslatorInterface $translator,
-        array $locales,
-        bool $isMultistoreUsed
-    ) {
-        parent::__construct($translator, $locales);
-
-        $this->isMultistoreUsed = $isMultistoreUsed;
-    }
 
     /**
      * {@inheritdoc}
@@ -67,26 +49,32 @@ class ProductExtraTabType extends TranslatorAwareType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('id_product', HiddenType::class)
+            ->add('id_product_extra_tab', HiddenType::class)
             ->add('name', TextType::class, [
                 'label' => $this->trans('Name', TranslationDomains::ADMIN_GLOBAL),
                 'required' => true,
-                    'constraints' => [
-                        new NotBlank(),
+                'constraints' => [
+                    new NotBlank(),
                 ],
+                'attr' => [
+                    'readonly' => true,
+                ]
             ])
-        ->add('title', TranslatableType::class, [
-            'type' => TextType::class,
-            'locales' => $this->locales,
+            ->add('title', TranslatableType::class, [
+                'type' => TextType::class,
+                'locales' => $this->locales,
                 'label' => $this->trans('Title', TranslationDomains::ADMIN_GLOBAL),
                 'required' => true,
-            'options' => ['constraints' => [
-                        new NotBlank(),
+                'options' => ['constraints' => [
+                    new NotBlank(),
                 ]],
             ])
             ->add('content', TranslatableType::class, [
                 'type' => FormattedTextareaType::class,
-                'label' => $this->trans('Default content', TranslationDomains::TRANSLATION_DOMAIN_ADMIN),
+                'label' => $this->trans('Content', TranslationDomains::TRANSLATION_DOMAIN_ADMIN),
                 'locales' => $this->locales,
+                'required' => true,
                 'options' => [
                     'constraints' => [
                         new CleanHtml([
@@ -99,26 +87,8 @@ class ProductExtraTabType extends TranslatorAwareType
                 ],
             ])
             ->add('active', SwitchType::class, [
-                'label' => $this->trans('Active', TranslationDomains::ADMIN_GLOBAL),
+                'label' => $this->trans('Active on this product', TranslationDomains::TRANSLATION_DOMAIN_ADMIN),
                 'required' => true,
             ]);
-
-        if ($this->isMultistoreUsed) {
-            $builder->add(
-                'shop_association',
-                ShopChoiceTreeType::class,
-                [
-                    'label' => $this->trans('Shop association', TranslationDomains::ADMIN_GLOBAL),
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => $this->trans(
-                                'You have to select at least one shop to associate this item with',
-                                'Admin.Notifications.Error'
-                            ),
-                        ]),
-                    ],
-                ]
-            );
-        }
     }
 }

@@ -22,19 +22,23 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 * #}
 
-<label class="form-control-label">{{ 'Products'|trans({}, 'Admin.Global') }}</label>
-<div id="related-product" class="col-sm input-container">
-    <div id="related-content" class="row {{ form.vars.value == null or form.vars.value.data|length == 0 ? 'hide':'' }}">
-        <fieldset>
-            {{ form_widget(form) }}
-        </fieldset>
-        <fieldset>
-            <a class="btn tooltip-link delete pl-0 pr-0" id="reset_related_product"><i class="material-icons">delete</i></a>
-        </fieldset>
-        <button type="button"
-                class="btn btn-outline-primary sensitive open {{ form.vars.value != null and form.vars.value.data|length > 0 ? 'hide':'' }}"
-                id="add-related-product-button">
-            <i class="material-icons">add_circle</i> {{ 'Add a product'|trans({}, 'Admin.Catalog.Feature') }}
-        </button>
+{% form_theme form '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit.html.twig' %}
+
+{% block form %}
+    <div class="card">
+        <h3 class="card-header">
+            <i class="material-icons">schedule</i>
+            {{ 'Tab content'|trans({}, translationDomain) }}
+        </h3>
+        <div class="card-block row">
+            <div class="card-text">
+                {{ form_widget(form) }}
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="btn btn-primary" id="add-recipes-to-product">
+                {{ 'Save'|trans({}, 'Admin.Actions') }}
+            </div>
+        </div>
     </div>
-</div>
+{% endblock %}

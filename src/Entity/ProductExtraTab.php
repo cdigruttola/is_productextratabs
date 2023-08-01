@@ -72,6 +72,10 @@ class ProductExtraTab
     private $name;
 
     /**
+     * @ORM\OneToMany(targetEntity="Oksydan\IsProductExtraTabs\Entity\ProductExtraTabProduct", cascade={"persist", "remove"}, mappedBy="productExtraTab")
+     */
+    private $productExtraTabProducts;
+    /**
      * @ORM\OneToMany(targetEntity="Oksydan\IsProductExtraTabs\Entity\ProductExtraTabDefaultLang", cascade={"persist", "remove"}, mappedBy="productExtraTab")
      */
     private $productExtraTabDefaultLangs;
@@ -89,6 +93,7 @@ class ProductExtraTab
     public function __construct()
     {
         $this->shops = new ArrayCollection();
+        $this->productExtraTabProducts = new ArrayCollection();
         $this->productExtraTabDefaultLangs = new ArrayCollection();
     }
 
@@ -210,6 +215,43 @@ class ProductExtraTab
     public function addShop(Shop $shop): ProductExtraTab
     {
         $this->shops[] = $shop;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getProductExtraTabProducts()
+    {
+        return $this->productExtraTabProducts;
+    }
+
+    /**
+     * @param int $productId
+     *
+     * @return ProductExtraTabProduct|null
+     */
+    public function getProductExtraTabProductByProductId(int $productId): ?ProductExtraTabProduct
+    {
+        foreach ($this->productExtraTabProducts as $extraTabProduct) {
+            if ($productId === $extraTabProduct->getIdProduct()) {
+                return $extraTabProduct;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param ProductExtraTabProduct $extraTabProduct
+     *
+     * @return ProductExtraTab $this
+     */
+    public function addProductExtraTabProduct(ProductExtraTabProduct $extraTabProduct): ProductExtraTab
+    {
+        $extraTabProduct->setProductExtraTab($this);
+        $this->productExtraTabProducts->add($extraTabProduct);
 
         return $this;
     }

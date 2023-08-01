@@ -35,18 +35,40 @@ use PrestaShopBundle\Entity\Lang;
  *
  * @ORM\Entity
  */
-class ProductExtraTabDefaultLang
+class ProductExtraTabProductLang
 {
     /**
-     * @var ProductExtraTab
+     * @var int
      *
      * @ORM\Id
      *
-     * @ORM\ManyToOne(targetEntity="Oksydan\IsProductExtraTabs\Entity\ProductExtraTab", inversedBy="productExtraTabDefaultLangs")
+     * @ORM\Column(name="id_product_extra_tab", type="integer")
+     * @Orm\GeneratedValue(strategy="NONE")
      *
-     * @ORM\JoinColumn(name="id_product_extra_tab", referencedColumnName="id_product_extra_tab", nullable=false)
      */
-    private $productExtraTab;
+    private $id_product_extra_tab;
+    /**
+     * @var int
+     *
+     * @ORM\Id
+     *
+     * @ORM\Column(name="id_product", type="integer")
+     * @Orm\GeneratedValue(strategy="NONE")
+     *
+     */
+    private $id_product;
+
+    /**
+     * @var ProductExtraTabProduct
+     *
+     * @ORM\ManyToOne(targetEntity="Oksydan\IsProductExtraTabs\Entity\ProductExtraTabProduct", inversedBy="productExtraTabProductLangs")
+     *
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_product_extra_tab", referencedColumnName="id_product_extra_tab", nullable=false),
+     *   @ORM\JoinColumn(name="id_product", referencedColumnName="id_product", nullable=false)
+     * })
+     */
+    private $productExtraTabProduct;
 
     /**
      * @var Lang
@@ -73,21 +95,20 @@ class ProductExtraTabDefaultLang
     private $content;
 
     /**
-     * @return ProductExtraTab
+     * @return ProductExtraTabProduct
      */
-    public function getProductExtraTab(): ProductExtraTab
+    public function getProductExtraTabProduct(): ProductExtraTabProduct
     {
-        return $this->productExtraTab;
+        return $this->productExtraTabProduct;
     }
 
     /**
-     * @param ProductExtraTab $extraTab
-     *
-     * @return ProductExtraTabDefaultLang $this
+     * @param ProductExtraTabProduct $extraTab
+     * @return ProductExtraTabProductLang
      */
-    public function setProductExtraTab(ProductExtraTab $extraTab): ProductExtraTabDefaultLang
+    public function setProductExtraTabProduct(ProductExtraTabProduct $extraTab): ProductExtraTabProductLang
     {
-        $this->productExtraTab = $extraTab;
+        $this->productExtraTabProduct = $extraTab;
 
         return $this;
     }
@@ -103,9 +124,9 @@ class ProductExtraTabDefaultLang
     /**
      * @param string $title
      *
-     * @return ProductExtraTabDefaultLang $this
+     * @return ProductExtraTabProductLang $this
      */
-    public function setTitle(string $title): ProductExtraTabDefaultLang
+    public function setTitle(string $title): ProductExtraTabProductLang
     {
         $this->title = $title;
 
@@ -123,9 +144,9 @@ class ProductExtraTabDefaultLang
     /**
      * @param string $content
      *
-     * @return ProductExtraTabDefaultLang $this
+     * @return ProductExtraTabProductLang $this
      */
-    public function setContent(string $content): ProductExtraTabDefaultLang
+    public function setContent(string $content): ProductExtraTabProductLang
     {
         $this->content = $content;
 
@@ -143,9 +164,9 @@ class ProductExtraTabDefaultLang
     /**
      * @param Lang $lang
      *
-     * @return ProductExtraTabDefaultLang $this
+     * @return ProductExtraTabProductLang $this
      */
-    public function setLang(Lang $lang): ProductExtraTabDefaultLang
+    public function setLang(Lang $lang): ProductExtraTabProductLang
     {
         $this->lang = $lang;
 
