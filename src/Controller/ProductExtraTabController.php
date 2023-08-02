@@ -192,6 +192,7 @@ class ProductExtraTabController extends FrameworkBundleAdminController
      * @param Request $request
      * @param int $extraTabId
      * @param int $productId
+     *
      * @return Response
      */
     public function updateProductAction(Request $request, int $extraTabId, int $productId): Response
@@ -207,6 +208,7 @@ class ProductExtraTabController extends FrameworkBundleAdminController
             ->findOneBy(['id' => $extraTabId]);
 
         $statusCode = Response::HTTP_OK;
+
         return $this->json(['message' => $this->trans('Successful update.', 'Admin.Notifications.Success')], $statusCode);
     }
 
