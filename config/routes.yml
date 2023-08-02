@@ -40,3 +40,11 @@ productextratab_controller_update_positions:
     defaults:
         _controller: 'Oksydan\IsProductExtraTabs\Controller\ProductExtraTabController::updatePositionAction'
 
+productextratab_controller_update_product:
+  path: /is_productextratab/{extraTabId}/{productId}/update
+  methods: [ POST ]
+  defaults:
+    _controller: 'Oksydan\IsProductExtraTabs\Controller\ProductExtraTabController::updateProductAction'
+  requirements:
+    extraTabId: \d+
+    productId: \d+

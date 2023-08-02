@@ -7,6 +7,7 @@ namespace Oksydan\IsProductExtraTabs\Hook;
 use Oksydan\IsProductExtraTabs\Form\ProductExtraTabProductType;
 use Oksydan\IsProductExtraTabs\Translations\TranslationDomains;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider\FormDataProviderInterface;
+use Symfony\Component\Form\FormFactory;
 use Tools;
 use Twig\Environment;
 
@@ -25,26 +26,25 @@ class DisplayAdminProductsExtra extends AbstractDisplayHook
             return false;
         }
 
-        $toReturn = '';
-
         $productId = $params['id_product'] ?? Tools::getValue('id_product');
 
         /** @var FormDataProviderInterface $formDataProvider */
         $formDataProvider = $this->module->get('oksydan.is_product_extra_tab.form.identifiable_object.data_provider.product_extra_tab_product_form_data_provider');
+        /** @var $twig Environment */
+        $twig = $this->module->get('twig');
+        /** @var FormFactory $formFactory */
+        $formFactory = $this->module->get('form.factory');
 
         $data = $formDataProvider->getData($productId);
 
-        foreach ($data as $tab) {
-            $form = $this->module->get('form.factory')->create(ProductExtraTabProductType::class, $tab);
-
-            /** @var $twig Environment */
-            $twig = $this->module->get('twig');
-
-            $toReturn .= $twig->render($this->getTemplateFullPath(), [
-                'form' => $form->createView(),
-                'translationDomain' => TranslationDomains::TRANSLATION_DOMAIN_ADMIN, ]);
+        $forms = [];
+        foreach ($data as $key => $tab) {
+            $form = $formFactory->create(ProductExtraTabProductType::class, $tab);
+            $forms[$key] = $form->createView();
         }
 
-        return $toReturn;
+        return $twig->render($this->getTemplateFullPath(), [
+            'forms' => $forms,
+            'translationDomain' => TranslationDomains::TRANSLATION_DOMAIN_ADMIN, ]);
     }
 }

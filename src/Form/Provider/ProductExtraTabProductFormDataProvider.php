@@ -55,22 +55,24 @@ class ProductExtraTabProductFormDataProvider implements FormDataProviderInterfac
 
         foreach ($extraTabs as $extraTab) {
             $data = [];
-            $extraTabProduct = $extraTab->getProductExtraTabProductByProductId($id);
+            $extraTabProduct = $extraTab->getProductExtraTabProductByProductId((int) $id);
+            $idExtraTab = $extraTab->getId();
+            $data['id_product_extra_tab'] = $extraTab->getId();
+            $data['id_product'] = $id;
+            $data["name_$idExtraTab"] = $extraTab->getName();
             if ($extraTabProduct == null) {
-                $data['active'] = $extraTab->getActive();
-                $data['name'] = $extraTab->getName();
+                $data["active_$idExtraTab"] = $extraTab->getActive();
 
                 foreach ($extraTab->getProductExtraTabDefaultLangs() as $extraTabDefaultLang) {
-                    $data['title'][$extraTabDefaultLang->getLang()->getId()] = $extraTabDefaultLang->getTitle();
-                    $data['content'][$extraTabDefaultLang->getLang()->getId()] = $extraTabDefaultLang->getContent();
+                    $data["title_$idExtraTab"][$extraTabDefaultLang->getLang()->getId()] = $extraTabDefaultLang->getTitle();
+                    $data["content_$idExtraTab"][$extraTabDefaultLang->getLang()->getId()] = $extraTabDefaultLang->getContent();
                 }
             } else {
-                $data['active'] = $extraTabProduct->getActive();
-                $data['name'] = $extraTab->getName();
+                $data["active_$idExtraTab"] = $extraTabProduct->getActive();
 
                 foreach ($extraTabProduct->getProductExtraTabProductLangs() as $extraTabProductLang) {
-                    $data['title'][$extraTabProductLang->getLang()->getId()] = $extraTabProductLang->getTitle();
-                    $data['content'][$extraTabProductLang->getLang()->getId()] = $extraTabProductLang->getContent();
+                    $data["title_$idExtraTab"][$extraTabProductLang->getLang()->getId()] = $extraTabProductLang->getTitle();
+                    $data["content_$idExtraTab"][$extraTabProductLang->getLang()->getId()] = $extraTabProductLang->getContent();
                 }
             }
             $toReturn[$extraTab->getId()] = $data;

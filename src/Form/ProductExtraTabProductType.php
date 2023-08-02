@@ -45,10 +45,12 @@ class ProductExtraTabProductType extends TranslatorAwareType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var int $idExtraTab */
+        $idExtraTab = $options['data']['id_product_extra_tab'] ?? 0;
         $builder
             ->add('id_product', HiddenType::class)
             ->add('id_product_extra_tab', HiddenType::class)
-            ->add('name', TextType::class, [
+            ->add("name_$idExtraTab", TextType::class, [
                 'label' => $this->trans('Name', TranslationDomains::ADMIN_GLOBAL),
                 'required' => true,
                 'constraints' => [
@@ -58,7 +60,7 @@ class ProductExtraTabProductType extends TranslatorAwareType
                     'readonly' => true,
                 ],
             ])
-            ->add('title', TranslatableType::class, [
+            ->add("title_$idExtraTab", TranslatableType::class, [
                 'type' => TextType::class,
                 'locales' => $this->locales,
                 'label' => $this->trans('Title', TranslationDomains::ADMIN_GLOBAL),
@@ -67,7 +69,7 @@ class ProductExtraTabProductType extends TranslatorAwareType
                     new NotBlank(),
                 ]],
             ])
-            ->add('content', TranslatableType::class, [
+            ->add("content_$idExtraTab", TranslatableType::class, [
                 'type' => FormattedTextareaType::class,
                 'label' => $this->trans('Content', TranslationDomains::TRANSLATION_DOMAIN_ADMIN),
                 'locales' => $this->locales,
@@ -83,7 +85,7 @@ class ProductExtraTabProductType extends TranslatorAwareType
                     ],
                 ],
             ])
-            ->add('active', SwitchType::class, [
+            ->add("active_$idExtraTab", SwitchType::class, [
                 'label' => $this->trans('Active on this product', TranslationDomains::TRANSLATION_DOMAIN_ADMIN),
                 'required' => true,
             ]);

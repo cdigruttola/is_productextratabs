@@ -36,6 +36,7 @@ module.exports = {
     entry: {
         index: '../js/admin/index',
         form: '../js/admin/form',
+        product: '../js/admin/product',
     }, output: {
         path: path.resolve(__dirname, '../../views/js'), filename: '[name].bundle.js', publicPath: 'public',
     }, // devtool: 'source-map', // uncomment me to build source maps (really slow)

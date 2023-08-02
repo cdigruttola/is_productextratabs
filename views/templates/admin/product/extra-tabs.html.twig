@@ -25,18 +25,20 @@
 {% block content %}
     <div class="row justify-content-center">
         <div class="col">
-            <a href="{{ path('admin_recipes') }}" class="btn btn-outline-secondary">
-                {{ 'Recipes config'|trans({}, translationDomain) }}
+            <a href="{{ path('productextratab_controller') }}" class="btn btn-outline-secondary">
+                {{ 'Extra tab config'|trans({}, translationDomain) }}
             </a>
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col">
-            {% include '@Modules/is_productextratabs/views/templates/admin/product/form.html.twig' %}
+          {% for key, form in forms %}
+            {% include '@Modules/is_productextratabs/views/templates/admin/product/form.html.twig' with {'id': key } %}
+          {% endfor %}
         </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('../modules/is_productextratabs/views/js/product_extra.bundle.js') }}"></script>
+  <script src="{{ asset('../modules/is_productextratabs/views/js/product.bundle.js') }}"></script>
 {% endblock %}

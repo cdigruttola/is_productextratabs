@@ -24,21 +24,25 @@
 
 {% form_theme form '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit.html.twig' %}
 
+{% set name = attribute(form, 'name_' ~ id) %}
+
 {% block form %}
-    <div class="card">
-        <h3 class="card-header">
-            <i class="material-icons">schedule</i>
-            {{ 'Tab content'|trans({}, translationDomain) }}
-        </h3>
-        <div class="card-block row">
-            <div class="card-text">
-                {{ form_widget(form) }}
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="btn btn-primary" id="add-recipes-to-product">
-                {{ 'Save'|trans({}, 'Admin.Actions') }}
-            </div>
-        </div>
+  <div class="card">
+    <h3 class="card-header">
+      <i class="material-icons">schedule</i>
+      {{ 'Tab content %s'|trans({ '%s' : name.vars.value}, translationDomain) }}
+    </h3>
+    <div class="card-block row">
+      <div class="card-text" data-content="{{ id }}">
+        {{ form_widget(form, {'id' : form.vars.id ~ '_' ~ id, 'name' : form.vars.name ~ '_' ~ id}) }}
+      </div>
     </div>
+    <div class="card-footer">
+      <div class="btn btn-primary save_extra_tab" data-content="{{ id }}"
+           data-action="{{ path('productextratab_controller_update_product', {'extraTabId': form.id_product_extra_tab.vars.value, 'productId': form.id_product.vars.value}) }}"
+      >
+        {{ 'Save'|trans({}, 'Admin.Actions') }}
+      </div>
+    </div>
+  </div>
 {% endblock %}
