@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="card-footer">
-      <div class="btn btn-primary save_extra_tab" data-content="{{ id }}"
+      <div class="btn btn-primary save_extra_tab" data-content="{{ id }}" data-languages="{{ languages }}"
            data-action="{{ path('productextratab_controller_update_product', {'extraTabId': form.id_product_extra_tab.vars.value, 'productId': form.id_product.vars.value}) }}"
       >
         {{ 'Save'|trans({}, 'Admin.Actions') }}

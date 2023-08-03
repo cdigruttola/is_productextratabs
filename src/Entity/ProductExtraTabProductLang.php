@@ -93,6 +93,46 @@ class ProductExtraTabProductLang
     private $content;
 
     /**
+     * @return int
+     */
+    public function getIdProductExtraTab(): int
+    {
+        return $this->id_product_extra_tab;
+    }
+
+    /**
+     * @param int $id_product_extra_tab
+     *
+     * @return ProductExtraTabProductLang
+     */
+    public function setIdProductExtraTab(int $id_product_extra_tab): ProductExtraTabProductLang
+    {
+        $this->id_product_extra_tab = $id_product_extra_tab;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdProduct(): int
+    {
+        return $this->id_product;
+    }
+
+    /**
+     * @param int $id_product
+     *
+     * @return ProductExtraTabProductLang
+     */
+    public function setIdProduct(int $id_product): ProductExtraTabProductLang
+    {
+        $this->id_product = $id_product;
+
+        return $this;
+    }
+
+    /**
      * @return ProductExtraTabProduct
      */
     public function getProductExtraTabProduct(): ProductExtraTabProduct

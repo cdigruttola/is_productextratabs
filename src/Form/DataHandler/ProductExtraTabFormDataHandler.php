@@ -61,14 +61,14 @@ class ProductExtraTabFormDataHandler implements FormDataHandlerInterface
         foreach ($this->languages as $language) {
             $langId = (int) $language['id_lang'];
             $lang = $this->langRepository->findOneBy(['id' => $langId]);
-            $sliderLang = new ProductExtraTabDefaultLang();
+            $productExtraTabDefaultLang = new ProductExtraTabDefaultLang();
 
-            $sliderLang
+            $productExtraTabDefaultLang
                 ->setLang($lang)
                 ->setTitle($data['title'][$langId] ?? '')
                 ->setContent($data['content'][$langId] ?? '');
 
-            $extraTab->addProductExtraTabDefaultLang($sliderLang);
+            $extraTab->addProductExtraTabDefaultLang($productExtraTabDefaultLang);
         }
 
         $this->entityManager->persist($extraTab);

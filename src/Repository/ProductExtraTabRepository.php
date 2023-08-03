@@ -80,6 +80,7 @@ class ProductExtraTabRepository extends EntityRepository
             ->join('s.shops', 'ss')
             ->andWhere('sl.lang = :langId')
             ->andWhere('ss.id = :storeId')
+            ->andWhere('sl.content != \'\'')
             ->orderBy('s.position')
             ->setParameter('langId', (int) $idLang)
             ->setParameter('storeId', (int) $idStore);

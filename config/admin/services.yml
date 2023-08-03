@@ -139,7 +139,6 @@ services:
   oksydan.is_product_extra_tab.form.identifiable_object.data_handler.product_extra_tab_product_form_data_handler:
     class: 'Oksydan\IsProductExtraTabs\Form\DataHandler\ProductExtraTabProductFormDataHandler'
     arguments:
-      - '@oksydan.is_product_extra_tab.repository.product_extra_tab'
       - '@prestashop.core.admin.lang.repository'
       - '@doctrine.orm.default_entity_manager'
       - "@=service('prestashop.adapter.legacy.context').getLanguages()"

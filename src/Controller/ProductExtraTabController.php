@@ -6,8 +6,10 @@ namespace Oksydan\IsProductExtraTabs\Controller;
 
 use Exception;
 use Oksydan\IsProductExtraTabs\Entity\ProductExtraTab;
+use Oksydan\IsProductExtraTabs\Entity\ProductExtraTabProduct;
 use Oksydan\IsProductExtraTabs\Filter\ProductExtraTabFilters;
 use Oksydan\IsProductExtraTabs\Translations\TranslationDomains;
+use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataHandler\FormDataHandlerInterface;
 use PrestaShop\PrestaShop\Core\Grid\Position\Exception\PositionDataException;
 use PrestaShop\PrestaShop\Core\Grid\Position\Exception\PositionUpdateException;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
@@ -197,19 +199,44 @@ class ProductExtraTabController extends FrameworkBundleAdminController
      */
     public function updateProductAction(Request $request, int $extraTabId, int $productId): Response
     {
-        /**
-         * @var array
-         */
-        $list = $request->get('values');
+        $titles = $request->get('titles');
+        $contents = $request->get('contents');
+
+        $data = [];
+        $data['active'] = (bool) $request->get('active');
+        $data['id_product_extra_tab'] = $extraTabId;
+        $data['id_product'] = $productId;
+        foreach ($titles as $title) {
+            $data['title'][(int) $title['languageId']] = $title['value'];
+        }
+        foreach ($contents as $content) {
+            $data['content'][(int) $content['languageId']] = $content['value'];
+        }
+
+        /** @var FormDataHandlerInterface $dataHandler */
+        $dataHandler = $this->get('oksydan.is_product_extra_tab.form.identifiable_object.data_handler.product_extra_tab_product_form_data_handler');
 
         $entityManager = $this->get('doctrine.orm.entity_manager');
         $entity = $entityManager
-            ->getRepository(ProductExtraTab::class)
-            ->findOneBy(['id' => $extraTabId]);
+            ->getRepository(ProductExtraTabProduct::class)
+            ->findOneBy(['id_product_extra_tab' => $extraTabId, 'id_product' => $productId]);
 
-        $statusCode = Response::HTTP_OK;
+        try {
+            if ($entity) {
+                $dataHandler->update($extraTabId, $data);
+            } else {
+                $dataHandler->create($data);
+            }
+        } catch (Exception $e) {
+            \PrestaShopLogger::addLog($e->getTraceAsString());
 
-        return $this->json(['message' => $this->trans('Successful update.', 'Admin.Notifications.Success')], $statusCode);
+            return $this->json(
+                ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
+
+        return $this->json(['message' => $this->trans('Successful update.', 'Admin.Notifications.Success')], Response::HTTP_OK);
     }
 
     public function updatePositionAction(Request $request): Response

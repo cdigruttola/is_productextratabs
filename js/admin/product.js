@@ -38,42 +38,46 @@ $(() => {
 
   new TranslatableInput();
 
-  const text = "[Some text] ][with[ [some important info]";
-  console.log(text.match(/(?<=\[)[^\][]*(?=])/g));
-
   $('.save_extra_tab').click(function (e) {
 
     let id_tab = $(this).attr('data-content');
+    let languages = $(this).attr('data-languages').split(',');
+
     let inputs = $('#module_is_productextratabs .card-text').filter(function () {
       return $(this).attr('data-content') === id_tab
-    }).children().children();
+    }).children();
 
     let values = [];
-    inputs.each(function () {
-      if ($(this).is('input')) {
-        values.push({key: $(this)[0].name.match(/(?<=\[)[^\][]*(?=])/g), value: $(this).val()});
-      }
-      if ($(this).is('.switch-widget')) {
-        let input = $(this).find('input:checked');
-        values.push({key: input[0].name.match(/(?<=\[)[^\][]*(?=])/g), value: input.val()});
-      }
-      let text = $(this).find(':text');
-      text.each(function () {
-        values.push({key: $(this)[0].name.match(/(?<=\[)[^\][]*(?=])/g), value: $(this)[0].value});
+
+    const baseIdName = 'product_extra_tab_product_';
+    let token = inputs.find('#' + baseIdName + '_token').val();
+    let name = inputs.find('#' + baseIdName + 'name_' + id_tab).val();
+    let active = inputs.find('#' + baseIdName + 'active_' + id_tab + ' input:checked').val();
+
+    let titles = [];
+    let contents = [];
+    languages.forEach(language => {
+      titles.push({
+        languageId: language,
+        value: inputs.find('#' + baseIdName + 'title_' + id_tab + '_' + language).val()
       });
-      let textarea = $(this).find('textarea');
-      textarea.each(function () {
-        values.push({key: $(this)[0].name.match(/(?<=\[)[^\][]*(?=])/g), value: $(this)[0].value});
+      contents.push({
+        languageId: language,
+        value: inputs.find('#' + baseIdName + 'content_' + id_tab + '_' + language)[0].value
       });
     });
 
     $.ajax({
       type: 'POST',
-      url: $('.save_extra_tab').attr('data-action'),
+      url: $(this).attr('data-action'),
       async: false,
       dataType: "json",
       data: {
-        values: values
+        token: token,
+        name: name,
+        active: active,
+        titles: titles,
+        contents: contents,
       },
       headers: {Accept: "application/json"},
       success: function (result) {

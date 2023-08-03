@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Oksydan\IsProductExtraTabs\Hook;
 
+use Language;
 use Oksydan\IsProductExtraTabs\Form\ProductExtraTabProductType;
 use Oksydan\IsProductExtraTabs\Translations\TranslationDomains;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider\FormDataProviderInterface;
@@ -45,6 +46,8 @@ class DisplayAdminProductsExtra extends AbstractDisplayHook
 
         return $twig->render($this->getTemplateFullPath(), [
             'forms' => $forms,
-            'translationDomain' => TranslationDomains::TRANSLATION_DOMAIN_ADMIN, ]);
+            'translationDomain' => TranslationDomains::TRANSLATION_DOMAIN_ADMIN,
+            'languages' => implode(',', Language::getIDs()),
+            ]);
     }
 }

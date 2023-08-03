@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Oksydan\IsProductExtraTabs\Form\DataHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
+use Oksydan\IsProductExtraTabs\Entity\ProductExtraTab;
 use Oksydan\IsProductExtraTabs\Entity\ProductExtraTabProduct;
 use Oksydan\IsProductExtraTabs\Entity\ProductExtraTabProductLang;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataHandler\FormDataHandlerInterface;
@@ -13,11 +13,6 @@ use PrestaShopBundle\Entity\Repository\LangRepository;
 
 class ProductExtraTabProductFormDataHandler implements FormDataHandlerInterface
 {
-    /**
-     * @var EntityRepository
-     */
-    private $extraTabRepository;
-
     /**
      * @var LangRepository
      */
@@ -34,12 +29,10 @@ class ProductExtraTabProductFormDataHandler implements FormDataHandlerInterface
     private $languages;
 
     public function __construct(
-        EntityRepository $extraTabRepository,
         LangRepository $langRepository,
         EntityManagerInterface $entityManager,
         array $languages
     ) {
-        $this->extraTabRepository = $extraTabRepository;
         $this->langRepository = $langRepository;
         $this->entityManager = $entityManager;
         $this->languages = $languages;
@@ -50,24 +43,32 @@ class ProductExtraTabProductFormDataHandler implements FormDataHandlerInterface
      */
     public function create(array $data)
     {
-        $extraTab = new ProductExtraTabProduct();
+        /** @var ProductExtraTab $extraTab */
+        $extraTab = $this->entityManager->getRepository(ProductExtraTab::class)->find($data['id_product_extra_tab']);
 
-        $extraTab->setActive($data['active']);
-        $extraTab->setIdProductExtraTab($data['id_product_extra_tab']);
-        $extraTab->setIdProduct($data['id_product']);
+        $extraTabProduct = new ProductExtraTabProduct();
+
+        $extraTabProduct->setActive($data['active']);
+        $extraTabProduct->setIdProductExtraTab($data['id_product_extra_tab']);
+        $extraTabProduct->setProductExtraTab($extraTab);
+        $extraTabProduct->setIdProduct($data['id_product']);
 
         foreach ($this->languages as $language) {
             $langId = (int) $language['id_lang'];
             $lang = $this->langRepository->findOneBy(['id' => $langId]);
-            $sliderLang = new ProductExtraTabProductLang();
+            $productExtraTabProductLang = new ProductExtraTabProductLang();
 
-            $sliderLang
+            $productExtraTabProductLang
+                ->setIdProductExtraTab($data['id_product_extra_tab'])
+                ->setIdProduct($data['id_product'])
                 ->setLang($lang)
                 ->setTitle($data['title'][$langId] ?? '')
                 ->setContent($data['content'][$langId] ?? '');
+
+            $extraTabProduct->addProductExtraTabProductLang($productExtraTabProductLang);
         }
 
-        $this->entityManager->persist($extraTab);
+        $this->entityManager->persist($extraTabProduct);
         $this->entityManager->flush();
     }
 
@@ -76,14 +77,14 @@ class ProductExtraTabProductFormDataHandler implements FormDataHandlerInterface
      */
     public function update($id, array $data)
     {
-        /** @var ProductExtraTabProduct $extraTab */
-        $extraTab = $this->entityManager->getRepository(ProductExtraTabProduct::class)->findOneBy([$id]);
+        /** @var ProductExtraTabProduct $extraTabProduct */
+        $extraTabProduct = $this->entityManager->getRepository(ProductExtraTabProduct::class)->findOneBy(['id_product' => $data['id_product'], 'id_product_extra_tab' => $data['id_product_extra_tab']]);
 
-        $extraTab->setActive($data['active']);
+        $extraTabProduct->setActive($data['active']);
 
         foreach ($this->languages as $language) {
             $langId = (int) $language['id_lang'];
-            $extraTabDefaultLangByLangId = $extraTab->getProductExtraTabProductLangByLangId($langId);
+            $extraTabDefaultLangByLangId = $extraTabProduct->getProductExtraTabProductLangByLangId($langId);
 
             if (null === $extraTabDefaultLangByLangId) {
                 continue;
