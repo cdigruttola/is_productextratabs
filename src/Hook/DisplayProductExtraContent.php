@@ -43,6 +43,7 @@ class DisplayProductExtraContent extends AbstractCacheableDisplayHook
 
     /**
      * @param int $productId
+     *
      * @return array
      */
     private function getExtraTab(int $productId): array
@@ -61,7 +62,7 @@ class DisplayProductExtraContent extends AbstractCacheableDisplayHook
                     $data['title'] = $extraTabProductLang->getTitle();
                     $data['content'] = $extraTabProductLang->getContent();
                     $toReturn[$extraTab->getId()] = $data;
-                } else if ($extraTabProduct == null) {
+                } elseif ($extraTabProduct == null) {
                     $data = [];
                     $extraTabDefaultLang = $extraTab->getProductExtraTabDefaultLangByLangId($this->context->language->id);
                     $data['title'] = $extraTabDefaultLang->getTitle();

@@ -36,7 +36,7 @@ abstract class AbstractCacheableDisplayHook extends AbstractDisplayHook
         parent::__construct($module, $context);
 
         $this->productExtraTabRepository = $productExtraTabRepository;
-       $this->productExtraTabProductRepository = $productExtraTabProductRepository;
+        $this->productExtraTabProductRepository = $productExtraTabProductRepository;
         $this->templateCache = $templateCache;
     }
 

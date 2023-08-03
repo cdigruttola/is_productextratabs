@@ -219,7 +219,6 @@ class ProductExtraTab
         return $this;
     }
 
-
     /**
      * @param int $shopId
      *
