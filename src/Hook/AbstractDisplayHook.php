@@ -41,19 +41,16 @@ abstract class AbstractDisplayHook extends AbstractHook
 
     abstract protected function getTemplate(): string;
 
-    protected function getProductData($params)
+    protected function getProductData($params) : int
     {
         if ($params['product'] instanceof Product) {
             $productId = $params['product']->id;
         } elseif (isset($params['id_product'])) {
-            $productId = (int) $params['id_product'];
+            $productId = (int)$params['id_product'];
         } else {
-            $productId = (int) Tools::getValue('id_product');
+            $productId = (int)Tools::getValue('id_product');
         }
 
-        return [
-            $productId,
-            (int) Context::getContext()->shop->id,
-        ];
+        return $productId;
     }
 }

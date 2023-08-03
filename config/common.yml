@@ -44,6 +44,7 @@ services:
     public: true
     arguments:
       - '@oksydan.is_product_extra_tab.repository.product_extra_tab'
+      - '@oksydan.is_product_extra_tab.repository.product_extra_tab_product'
       - '@oksydan.is_product_extra_tab.cache.template_cache'
 
   oksydan.is_product_extra_tab.hook.display_product_extra_content:

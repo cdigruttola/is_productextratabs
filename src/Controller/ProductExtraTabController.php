@@ -228,8 +228,6 @@ class ProductExtraTabController extends FrameworkBundleAdminController
                 $dataHandler->create($data);
             }
         } catch (Exception $e) {
-            \PrestaShopLogger::addLog($e->getTraceAsString());
-
             return $this->json(
                 ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
                 Response::HTTP_INTERNAL_SERVER_ERROR

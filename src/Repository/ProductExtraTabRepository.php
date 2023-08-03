@@ -75,6 +75,7 @@ class ProductExtraTabRepository extends EntityRepository
     ): array {
         $qb = $this
             ->createQueryBuilder('s')
+            ->distinct()
             ->select('sl.title, sl.content, s.id, s.name, s.active, s.position')
             ->join('s.productExtraTabDefaultLangs', 'sl')
             ->join('s.shops', 'ss')

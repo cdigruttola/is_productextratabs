@@ -219,6 +219,23 @@ class ProductExtraTab
         return $this;
     }
 
+
+    /**
+     * @param int $shopId
+     *
+     * @return bool
+     */
+    public function checkShop(int $shopId): bool
+    {
+        foreach ($this->shops as $shop) {
+            if ($shopId === $shop->getId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * @return ArrayCollection
      */

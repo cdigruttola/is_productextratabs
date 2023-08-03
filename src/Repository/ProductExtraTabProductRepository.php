@@ -28,10 +28,6 @@ class ProductExtraTabProductRepository extends EntityRepository
         bool $activeOnly = true,
         int $limit = 0
     ): array {
-        $defaults = $this->repository->getActiveProductExtraTabByStoreId($idStore);
-
-        \PrestaShopLogger::addLog(var_export($defaults, true));
-
         $qb = $this
             ->createQueryBuilder('s')
             ->select('s.id_product_extra_tab, s.id_product, pet.id, pet.name, pet.position, s.active')
@@ -51,12 +47,7 @@ class ProductExtraTabProductRepository extends EntityRepository
             $qb->setMaxResults($limit);
         }
 
-        $result = $qb->getQuery()->getScalarResult();
-
-        foreach ($defaults as $default) {
-        }
-
-        return $result;
+        return $qb->getQuery()->getScalarResult();
     }
 
     public function getActiveProductExtraTabProductByLangAndStoreId(
@@ -66,17 +57,17 @@ class ProductExtraTabProductRepository extends EntityRepository
         bool $activeOnly = true,
         int $limit = 0
     ): array {
-        \PrestaShopLogger::addLog(var_export($this->repository->getActiveProductExtraByLangAndStoreId($idLang, $idStore), true));
-
         $qb = $this
             ->createQueryBuilder('s')
-            ->select('sl.title, sl.content, s.id_product_extra_tab, s.id_product, pet.id, pet.name, s.active')
+            ->distinct()
+            ->select('sl.title, sl.content, pet.id, pet.name, s.active, pet.position')
             ->join('s.productExtraTabProductLangs', 'sl')
-            ->join('s.id_product_extra_tab', 'pet')
+            ->join('s.productExtraTab', 'pet')
             ->join('pet.shops', 'ss')
             ->andWhere('sl.lang = :langId')
             ->andWhere('ss.id = :storeId')
             ->andWhere('s.id_product = :productId')
+            ->andWhere('sl.content != \'\' ')
             ->orderBy('pet.position')
             ->setParameter('langId', $idLang)
             ->setParameter('storeId', $idStore)

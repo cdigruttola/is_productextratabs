@@ -7,6 +7,7 @@ namespace Oksydan\IsProductExtraTabs\Hook;
 use Context;
 use Module;
 use Oksydan\IsProductExtraTabs\Cache\TemplateCache;
+use Oksydan\IsProductExtraTabs\Repository\ProductExtraTabProductRepository;
 use Oksydan\IsProductExtraTabs\Repository\ProductExtraTabRepository;
 
 abstract class AbstractCacheableDisplayHook extends AbstractDisplayHook
@@ -14,7 +15,11 @@ abstract class AbstractCacheableDisplayHook extends AbstractDisplayHook
     /**
      * @var ProductExtraTabRepository
      */
-    protected $repository;
+    protected $productExtraTabRepository;
+    /**
+     * @var ProductExtraTabProductRepository
+     */
+    protected $productExtraTabProductRepository;
 
     /**
      * @var TemplateCache
@@ -24,12 +29,14 @@ abstract class AbstractCacheableDisplayHook extends AbstractDisplayHook
     public function __construct(
         Module $module,
         Context $context,
-        ProductExtraTabRepository $slideRepository,
+        ProductExtraTabRepository $productExtraTabRepository,
+        ProductExtraTabProductRepository $productExtraTabProductRepository,
         TemplateCache $templateCache
     ) {
         parent::__construct($module, $context);
 
-        $this->repository = $slideRepository;
+        $this->productExtraTabRepository = $productExtraTabRepository;
+       $this->productExtraTabProductRepository = $productExtraTabProductRepository;
         $this->templateCache = $templateCache;
     }
 

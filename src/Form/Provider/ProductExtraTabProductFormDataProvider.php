@@ -49,7 +49,7 @@ class ProductExtraTabProductFormDataProvider implements FormDataProviderInterfac
      */
     public function getData($id): array
     {
-        /** @var ProductExtraTab $extraTab */
+        /** @var ProductExtraTab[] $extraTabs */
         $extraTabs = $this->productExtraTabRepository->findBy(['active' => 1]);
         $toReturn = [];
 
