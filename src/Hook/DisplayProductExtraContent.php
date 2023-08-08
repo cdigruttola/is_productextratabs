@@ -25,6 +25,10 @@ class DisplayProductExtraContent extends AbstractCacheableDisplayHook
 
     public function execute(array $params)
     {
+        if (!$this->shouldBlockBeDisplayed($params)) {
+            return '';
+        }
+
         $tabs = [];
 
         $productId = $this->getProductData($params);
@@ -32,9 +36,9 @@ class DisplayProductExtraContent extends AbstractCacheableDisplayHook
         foreach ($this->getExtraTab($productId) as $extraTab) {
             $tab = new ProductExtraContent();
             $params['tpl_content'] = $extraTab['content'];
+            $this->assignTemplateVariables($params);
             $tab->setTitle($extraTab['title'])
-                ->setContent(parent::execute($params));
-            parent::execute($params);
+                ->setContent($this->module->fetch($this->getTemplateFullPath()));
             $tabs[] = $tab;
         }
 
