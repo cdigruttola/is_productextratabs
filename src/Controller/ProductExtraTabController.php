@@ -162,32 +162,36 @@ class ProductExtraTabController extends FrameworkBundleAdminController
             ->findOneBy(['id' => $extraTabId]);
 
         if (empty($entity)) {
-            return $this->json([
+            $response = [
                 'status' => false,
-                'message' => sprintf('Extra tab %d doesn\'t exist', $extraTabId),
-            ]);
+                'message' => sprintf('Entity %d doesn\'t exist', $extraTabId),
+            ];
+            $errors = [$response];
+            $this->flashErrors($errors);
+
+            return $this->redirectToRoute('productextratab_controller');
         }
 
         try {
             $entity->setActive(!$entity->getActive());
             $entityManager->flush();
 
-            $response = [
-                'status' => true,
-                'message' => $this->trans('The status has been successfully updated.', 'Admin.Notifications.Success'),
-            ];
+            $this->addFlash('success', $this->trans('The status has been successfully updated.', 'Admin.Notifications.Success'));
         } catch (\Exception $e) {
             $response = [
                 'status' => false,
                 'message' => sprintf(
-                    'There was an error while updating the status of slide %d: %s',
+                    'There was an error while updating the status of tab %d: %s',
                     $extraTabId,
                     $e->getMessage()
                 ),
             ];
+            $errors = [$response];
+            $this->flashErrors($errors);
         }
 
-        return $this->json($response);
+        return $this->redirectToRoute('productextratab_controller');
+
     }
 
     /**
