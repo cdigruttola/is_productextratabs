@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Oksydan\IsProductExtraTabs\Hook;
 
+use Configuration;
 use Oksydan\IsProductExtraTabs\Entity\ProductExtraTab;
 use PrestaShop\PrestaShop\Core\Product\ProductExtraContent;
 
@@ -63,6 +64,9 @@ class DisplayProductExtraContent extends AbstractCacheableDisplayHook
                 if ($extraTabProduct && $extraTabProduct->getActive()) {
                     $data = [];
                     $extraTabProductLang = $extraTabProduct->getProductExtraTabProductLangByLangId($this->context->language->id);
+                    if($extraTabProductLang == null) {
+                        $extraTabProductLang = $extraTabProduct->getProductExtraTabProductLangByLangId((int)Configuration::get('PS_LANG_DEFAULT'));
+                    }
                     $data['title'] = $extraTabProductLang->getTitle();
                     $data['content'] = $extraTabProductLang->getContent();
                     $toReturn[$extraTab->getId()] = $data;
