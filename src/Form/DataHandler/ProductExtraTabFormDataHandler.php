@@ -93,13 +93,21 @@ class ProductExtraTabFormDataHandler implements FormDataHandlerInterface
             $langId = (int) $language['id_lang'];
             $extraTabDefaultLangByLangId = $extraTab->getProductExtraTabDefaultLangByLangId($langId);
 
+            $newEntity = false;
             if (null === $extraTabDefaultLangByLangId) {
-                continue;
+                $extraTabDefaultLangByLangId = new ProductExtraTabDefaultLang();
+                $lang = $this->langRepository->findOneById($langId);
+                $extraTabDefaultLangByLangId->setLang($lang);
+                $newEntity = true;
             }
 
             $extraTabDefaultLangByLangId
                 ->setTitle($data['title'][$langId] ?? '')
                 ->setContent($data['content'][$langId] ?? '');
+
+            if ($newEntity) {
+                $extraTab->addProductExtraTabDefaultLang($extraTabDefaultLangByLangId);
+            }
         }
 
         $this->entityManager->flush();
