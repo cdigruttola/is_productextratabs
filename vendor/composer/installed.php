@@ -3,7 +3,7 @@
         'name' => 'cdigruttola/is_productextratabs',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '1cfee0d4c2419013c7b3df50c182d2b38a0300c1',
+        'reference' => '9d8e3f5e469480d2bcfe8595055af479a85bd245',
         'type' => 'prestashop-module',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'cdigruttola/is_productextratabs' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '1cfee0d4c2419013c7b3df50c182d2b38a0300c1',
+            'reference' => '9d8e3f5e469480d2bcfe8595055af479a85bd245',
             'type' => 'prestashop-module',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

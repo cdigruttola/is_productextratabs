@@ -32,6 +32,7 @@ class ComposerStaticInit3c3c6443177b612c6699a7a8f892b138
         'Oksydan\\IsProductExtraTabs\\Exceptions\\DatabaseYamlFileNotExistsException' => __DIR__ . '/../..' . '/src/Exceptions/DatabaseYamlFileNotExistsException.php',
         'Oksydan\\IsProductExtraTabs\\Filter\\ProductExtraTabFilters' => __DIR__ . '/../..' . '/src/Filter/ProductExtraTabFilters.php',
         'Oksydan\\IsProductExtraTabs\\Form\\DataHandler\\ProductExtraTabFormDataHandler' => __DIR__ . '/../..' . '/src/Form/DataHandler/ProductExtraTabFormDataHandler.php',
+        'Oksydan\\IsProductExtraTabs\\Form\\DataHandler\\ProductExtraTabProductFormDataHandler' => __DIR__ . '/../..' . '/src/Form/DataHandler/ProductExtraTabProductFormDataHandler.php',
         'Oksydan\\IsProductExtraTabs\\Form\\ProductExtraTabProductType' => __DIR__ . '/../..' . '/src/Form/ProductExtraTabProductType.php',
         'Oksydan\\IsProductExtraTabs\\Form\\ProductExtraTabType' => __DIR__ . '/../..' . '/src/Form/ProductExtraTabType.php',
         'Oksydan\\IsProductExtraTabs\\Form\\Provider\\ProductExtraTabFormDataProvider' => __DIR__ . '/../..' . '/src/Form/Provider/ProductExtraTabFormDataProvider.php',

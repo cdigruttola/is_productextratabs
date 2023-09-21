@@ -62,20 +62,25 @@ class DisplayProductExtraContent extends AbstractCacheableDisplayHook
             if ($extraTab->checkShop($this->context->shop->id)) {
                 $extraTabProduct = $extraTab->getProductExtraTabProductByProductId($productId);
                 if ($extraTabProduct && $extraTabProduct->getActive()) {
-                    $data = [];
                     $extraTabProductLang = $extraTabProduct->getProductExtraTabProductLangByLangId($this->context->language->id);
-                    if($extraTabProductLang == null) {
+                    if ($extraTabProductLang == null) {
                         $extraTabProductLang = $extraTabProduct->getProductExtraTabProductLangByLangId((int)Configuration::get('PS_LANG_DEFAULT'));
                     }
-                    $data['title'] = $extraTabProductLang->getTitle();
-                    $data['content'] = $extraTabProductLang->getContent();
-                    $toReturn[$extraTab->getId()] = $data;
+                    if (!empty($extraTabProductLang->getContent())) {
+                        $data = [];
+                        $extraTabProductLang = $extraTabProduct->getProductExtraTabProductLangByLangId((int)Configuration::get('PS_LANG_DEFAULT'));
+                        $data['title'] = $extraTabProductLang->getTitle();
+                        $data['content'] = $extraTabProductLang->getContent();
+                        $toReturn[$extraTab->getId()] = $data;
+                    }
                 } elseif ($extraTabProduct == null) {
-                    $data = [];
                     $extraTabDefaultLang = $extraTab->getProductExtraTabDefaultLangByLangId($this->context->language->id);
-                    $data['title'] = $extraTabDefaultLang->getTitle();
-                    $data['content'] = $extraTabDefaultLang->getContent();
-                    $toReturn[$extraTab->getId()] = $data;
+                    if (!empty($extraTabDefaultLang->getContent())) {
+                        $data = [];
+                        $data['title'] = $extraTabDefaultLang->getTitle();
+                        $data['content'] = $extraTabDefaultLang->getContent();
+                        $toReturn[$extraTab->getId()] = $data;
+                    }
                 }
             }
         }

@@ -17,6 +17,7 @@ return array(
     'Oksydan\\IsProductExtraTabs\\Exceptions\\DatabaseYamlFileNotExistsException' => $baseDir . '/src/Exceptions/DatabaseYamlFileNotExistsException.php',
     'Oksydan\\IsProductExtraTabs\\Filter\\ProductExtraTabFilters' => $baseDir . '/src/Filter/ProductExtraTabFilters.php',
     'Oksydan\\IsProductExtraTabs\\Form\\DataHandler\\ProductExtraTabFormDataHandler' => $baseDir . '/src/Form/DataHandler/ProductExtraTabFormDataHandler.php',
+    'Oksydan\\IsProductExtraTabs\\Form\\DataHandler\\ProductExtraTabProductFormDataHandler' => $baseDir . '/src/Form/DataHandler/ProductExtraTabProductFormDataHandler.php',
     'Oksydan\\IsProductExtraTabs\\Form\\ProductExtraTabProductType' => $baseDir . '/src/Form/ProductExtraTabProductType.php',
     'Oksydan\\IsProductExtraTabs\\Form\\ProductExtraTabType' => $baseDir . '/src/Form/ProductExtraTabType.php',
     'Oksydan\\IsProductExtraTabs\\Form\\Provider\\ProductExtraTabFormDataProvider' => $baseDir . '/src/Form/Provider/ProductExtraTabFormDataProvider.php',

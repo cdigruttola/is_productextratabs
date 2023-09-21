@@ -42,7 +42,7 @@ module.exports = {
     }, // devtool: 'source-map', // uncomment me to build source maps (really slow)
     resolve: {
         extensions: ['.js', '.ts'], alias: {
-            '@PSJs': psJsDir, '@app': psJsDir + '/app', '@components': psJsDir + '/components',
+            '@PSJs': psJsDir, '@app': psJsDir + '/app', '@components': psJsDir + '/components', '@PSTypes': psJsDir + '/types',
         },
     }, module: {
         rules: [{
