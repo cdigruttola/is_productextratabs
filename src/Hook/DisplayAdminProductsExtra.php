@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Oksydan\IsProductExtraTabs\Hook;
 
-use Language;
 use Oksydan\IsProductExtraTabs\Form\ProductExtraTabProductType;
 use Oksydan\IsProductExtraTabs\Translations\TranslationDomains;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider\FormDataProviderInterface;
 use Symfony\Component\Form\FormFactory;
-use Tools;
 use Twig\Environment;
 
 class DisplayAdminProductsExtra extends AbstractDisplayHook
@@ -27,7 +25,7 @@ class DisplayAdminProductsExtra extends AbstractDisplayHook
             return false;
         }
 
-        $productId = $params['id_product'] ?? Tools::getValue('id_product');
+        $productId = $params['id_product'] ?? \Tools::getValue('id_product');
 
         /** @var FormDataProviderInterface $formDataProvider */
         $formDataProvider = $this->module->get('oksydan.is_product_extra_tab.form.identifiable_object.data_provider.product_extra_tab_product_form_data_provider');
@@ -47,7 +45,7 @@ class DisplayAdminProductsExtra extends AbstractDisplayHook
         return $twig->render($this->getTemplateFullPath(), [
             'forms' => $forms,
             'translationDomain' => TranslationDomains::TRANSLATION_DOMAIN_ADMIN,
-            'languages' => implode(',', Language::getIDs()),
+            'languages' => implode(',', \Language::getIDs()),
             ]);
     }
 }

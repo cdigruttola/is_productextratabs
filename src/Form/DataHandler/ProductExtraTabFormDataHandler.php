@@ -119,7 +119,7 @@ class ProductExtraTabFormDataHandler implements FormDataHandlerInterface
      * @param ProductExtraTab $slider
      * @param array|null $shopIdList
      */
-    private function addAssociatedShops(ProductExtraTab & $slider, array $shopIdList = null): void
+    private function addAssociatedShops(ProductExtraTab &$slider, array $shopIdList = null): void
     {
         $slider->clearShops();
 

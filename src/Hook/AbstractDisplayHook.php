@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Oksydan\IsProductExtraTabs\Hook;
 
-use Product;
-use Tools;
-
 abstract class AbstractDisplayHook extends AbstractHook
 {
     public function execute(array $params)
@@ -42,12 +39,12 @@ abstract class AbstractDisplayHook extends AbstractHook
 
     protected function getProductData($params): int
     {
-        if ($params['product'] instanceof Product) {
+        if ($params['product'] instanceof \Product) {
             $productId = $params['product']->id;
         } elseif (isset($params['id_product'])) {
             $productId = (int) $params['id_product'];
         } else {
-            $productId = (int) Tools::getValue('id_product');
+            $productId = (int) \Tools::getValue('id_product');
         }
 
         return $productId;

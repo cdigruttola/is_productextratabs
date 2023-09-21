@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Oksydan\IsProductExtraTabs\Installer\Provider;
 
-use Is_productextratabs;
 use Oksydan\IsProductExtraTabs\Exceptions\DatabaseYamlFileNotExistsException;
 
 class DatabaseYamlProvider
 {
     /**
-     * @var Is_productextratabs
+     * @var \Is_productextratabs
      */
     protected $module;
 
-    public function __construct(Is_productextratabs $module)
+    public function __construct(\Is_productextratabs $module)
     {
         $this->module = $module;
     }

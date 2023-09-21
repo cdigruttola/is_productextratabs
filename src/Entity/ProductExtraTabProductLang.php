@@ -43,6 +43,7 @@ class ProductExtraTabProductLang
      * @ORM\Id
      *
      * @ORM\Column(name="id_product_extra_tab", type="integer")
+     *
      * @Orm\GeneratedValue(strategy="NONE")
      */
     private $id_product_extra_tab;
@@ -52,6 +53,7 @@ class ProductExtraTabProductLang
      * @ORM\Id
      *
      * @ORM\Column(name="id_product", type="integer")
+     *
      * @Orm\GeneratedValue(strategy="NONE")
      */
     private $id_product;
@@ -62,6 +64,7 @@ class ProductExtraTabProductLang
      * @ORM\ManyToOne(targetEntity="Oksydan\IsProductExtraTabs\Entity\ProductExtraTabProduct", inversedBy="productExtraTabProductLangs")
      *
      * @ORM\JoinColumns({
+     *
      *   @ORM\JoinColumn(name="id_product_extra_tab", referencedColumnName="id_product_extra_tab", nullable=false),
      *   @ORM\JoinColumn(name="id_product", referencedColumnName="id_product", nullable=false)
      * })

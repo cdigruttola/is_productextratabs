@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Oksydan\IsProductExtraTabs\Hook;
 
-use Context;
-use Module;
 use Oksydan\IsProductExtraTabs\Cache\TemplateCache;
 use Oksydan\IsProductExtraTabs\Repository\ProductExtraTabProductRepository;
 use Oksydan\IsProductExtraTabs\Repository\ProductExtraTabRepository;
@@ -27,8 +25,8 @@ abstract class AbstractCacheableDisplayHook extends AbstractDisplayHook
     protected $templateCache;
 
     public function __construct(
-        Module $module,
-        Context $context,
+        \Module $module,
+        \Context $context,
         ProductExtraTabRepository $productExtraTabRepository,
         ProductExtraTabProductRepository $productExtraTabProductRepository,
         TemplateCache $templateCache

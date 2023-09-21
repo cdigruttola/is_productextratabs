@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Oksydan\IsProductExtraTabs\Controller;
 
-use Exception;
 use Oksydan\IsProductExtraTabs\Entity\ProductExtraTab;
 use Oksydan\IsProductExtraTabs\Entity\ProductExtraTabProduct;
 use Oksydan\IsProductExtraTabs\Filter\ProductExtraTabFilters;
@@ -61,7 +60,7 @@ class ProductExtraTabController extends FrameworkBundleAdminController
 
                 return $this->redirectToRoute('productextratab_controller');
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
         }
 
@@ -91,7 +90,7 @@ class ProductExtraTabController extends FrameworkBundleAdminController
 
                 return $this->redirectToRoute('productextratab_controller');
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
         }
 
@@ -191,7 +190,6 @@ class ProductExtraTabController extends FrameworkBundleAdminController
         }
 
         return $this->redirectToRoute('productextratab_controller');
-
     }
 
     /**
@@ -231,7 +229,7 @@ class ProductExtraTabController extends FrameworkBundleAdminController
             } else {
                 $dataHandler->create($data);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->json(
                 ['message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e))],
                 Response::HTTP_INTERNAL_SERVER_ERROR
@@ -271,10 +269,10 @@ class ProductExtraTabController extends FrameworkBundleAdminController
      *
      * @return array
      */
-    private function getErrorMessages(Exception $e): array
+    private function getErrorMessages(\Exception $e): array
     {
         return [
-            Exception::class => [
+            \Exception::class => [
                 $this->trans(
                     'Generic Exception',
                     TranslationDomains::TRANSLATION_DOMAIN_EXCEPTION

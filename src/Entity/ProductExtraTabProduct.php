@@ -43,6 +43,7 @@ class ProductExtraTabProduct
      * @ORM\Id
      *
      * @ORM\Column(name="id_product_extra_tab", type="integer")
+     *
      * @Orm\GeneratedValue(strategy="NONE")
      */
     private $id_product_extra_tab;
@@ -52,6 +53,7 @@ class ProductExtraTabProduct
      * @ORM\Id
      *
      * @ORM\Column(name="id_product", type="integer")
+     *
      * @Orm\GeneratedValue(strategy="NONE")
      */
     private $id_product;
@@ -65,6 +67,7 @@ class ProductExtraTabProduct
 
     /**
      * @ORM\ManyToOne(targetEntity="Oksydan\IsProductExtraTabs\Entity\ProductExtraTab", cascade={"persist", "remove"}, inversedBy="productExtraTabProducts")
+     *
      * @ORM\JoinColumn(name="id_product_extra_tab", referencedColumnName="id_product_extra_tab", nullable=false, onDelete="CASCADE")
      */
     private $productExtraTab;
