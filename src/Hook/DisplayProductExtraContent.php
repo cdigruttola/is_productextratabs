@@ -74,7 +74,7 @@ class DisplayProductExtraContent extends AbstractCacheableDisplayHook
                     }
                 } elseif ($extraTabProduct == null) {
                     $extraTabDefaultLang = $extraTab->getProductExtraTabDefaultLangByLangId($this->context->language->id);
-                    if (!empty($extraTabDefaultLang->getContent())) {
+                    if ($extraTabDefaultLang !== null && !empty($extraTabDefaultLang->getContent())) {
                         $data = [];
                         $data['title'] = $extraTabDefaultLang->getTitle();
                         $data['content'] = $extraTabDefaultLang->getContent();
