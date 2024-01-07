@@ -94,7 +94,7 @@ class ProductExtraTabInstaller
     {
         $databaseData = $this->databaseYaml->getParsedFileData();
         $container = $this->getContainer();
-        $dropTableAction = $container->get('oksydan.is_productslider.installer.action_database_drop_table');
+        $dropTableAction = $container->get('oksydan.is_product_extra_tab.installer.action_database_drop_table');
         $dropTableAction
             ->setData($databaseData)
             ->buildQuery();
