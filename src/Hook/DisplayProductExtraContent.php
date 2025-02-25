@@ -63,11 +63,11 @@ class DisplayProductExtraContent extends AbstractCacheableDisplayHook
                 if ($extraTabProduct && $extraTabProduct->getActive()) {
                     $extraTabProductLang = $extraTabProduct->getProductExtraTabProductLangByLangId($this->context->language->id);
                     if ($extraTabProductLang == null) {
-                        $extraTabProductLang = $extraTabProduct->getProductExtraTabProductLangByLangId((int) \Configuration::get('PS_LANG_DEFAULT'));
+                        $extraTabProductLang = $extraTabProduct->getProductExtraTabProductLangByLangId($this->context->language->id);
                     }
                     if (!empty($extraTabProductLang->getContent())) {
                         $data = [];
-                        $extraTabProductLang = $extraTabProduct->getProductExtraTabProductLangByLangId((int) \Configuration::get('PS_LANG_DEFAULT'));
+                        $extraTabProductLang = $extraTabProduct->getProductExtraTabProductLangByLangId($this->context->language->id);
                         $data['title'] = $extraTabProductLang->getTitle();
                         $data['content'] = $extraTabProductLang->getContent();
                         $toReturn[$extraTab->getId()] = $data;
